@@ -1,18 +1,13 @@
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 
 const app = express();
 app.use(cors());
+app.use("/cats", express.static(path.join(__dirname, "cats"))); // Раздаём файлы из папки
 
 let dayNumber = 34; // Начинаем с 34 и идём вниз
 let nextUpdateTime = getRandomUpdateTime();
-
-// 🔹 Список картинок с котиками (замени на свои Imgur-ссылки)
-const catImages = [
-"https://imgur.com/a/umtGeUA",
-	"https://imgur.com/a/umtGeUA",
-	"https://imgur.com/a/umtGeUA"
-];
 
 function getRandomUpdateTime() {
 	const now = new Date();
@@ -33,10 +28,10 @@ app.get("/counter", (req, res) => {
 	updateDayIfNeeded();
 	res.json({
 		day: dayNumber,
-		catImage: catImages[dayNumber % catImages.length] // Меняем фото каждый день
+		catImage: `/cats/cat${dayNumber % 10 + 1}.jpg`, // Выбираем случайное фото из 10 вариантов
+		nextUpdate: nextUpdateTime.toISOString()
 	});
 });
 
 app.listen(3000, () => {
-	console.log("Сервер запущен на http://localhost:3000");
 });
