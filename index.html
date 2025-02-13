@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>🔥</title>
+		<style>
+			/* Фон с гифками */
+			body {
+				font-family: "Comic Sans MS", cursive, sans-serif;
+				text-align: center;
+				background: linear-gradient(45deg, #ff00ff, #00ffff, #ff0000, #00ff00);
+				background-size: 400% 400%;
+				animation: bg 3s infinite alternate;
+				overflow: hidden;
+				position: relative;
+			}
+
+			/* Анимированный градиент */
+			@keyframes bg {
+				0% { filter: hue-rotate(0deg); }
+				100% { filter: hue-rotate(360deg); }
+			}
+
+			/* Фиксированный блок с гифками */
+			.gif-bg {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background-image: url("https://media4.giphy.com/media/VbnUQpnihPSIgIXuZv/giphy.gif"),
+				url("https://media.tenor.com/NOYF3f82b_gAAAAC/psychedelic.gif");
+				background-size: cover;
+				background-position: center;
+				mix-blend-mode: difference;
+				opacity: 0.8;
+				z-index: -1;
+			}
+
+			/* Мигающий текст + тряска */
+			@keyframes shake {
+				0% { transform: translate(2px, 2px) rotate(1deg); }
+				25% { transform: translate(-2px, -2px) rotate(-1deg); }
+				50% { transform: translate(2px, -2px) rotate(1deg); }
+				75% { transform: translate(-2px, 2px) rotate(-1deg); }
+				100% { transform: translate(2px, 2px) rotate(1deg); }
+			}
+
+			@keyframes blink {
+				0% { text-shadow: 5px 5px 20px red; }
+				50% { text-shadow: 5px 5px 20px yellow; }
+				100% { text-shadow: 5px 5px 20px blue; }
+			}
+
+			#counter {
+				font-size: 200px;
+				font-weight: bold;
+				color: cyan;
+				margin: 0;
+				animation: shake 0.1s infinite, blink 0.3s infinite alternate;
+			}
+
+			/* Радужная рамка вокруг кота */
+			@keyframes rainbow {
+				0% { border-color: red; }
+				14% { border-color: orange; }
+				28% { border-color: yellow; }
+				42% { border-color: green; }
+				56% { border-color: blue; }
+				70% { border-color: indigo; }
+				84% { border-color: violet; }
+				100% { border-color: red; }
+			}
+
+			img {
+				border: 15px solid transparent;
+				padding: 10px;
+				width: 500px;
+				height: 400px;
+				animation: rainbow 1s infinite;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="gif-bg"></div> <!-- Фон с гифками -->
+		<div id="counter">34</div>
+		<img id="catImage" src="" alt="Котик дня">
+
+		<script>
+		async function fetchCounter() {
+			const response = await fetch("http://localhost:3000/counter");
+			const data = await response.json();
+			document.getElementById("counter").textContent = data.day;
+			document.getElementById("catImage").src = data.catImage;
+		}
+
+		fetchCounter();
+		setInterval(fetchCounter, 60000); // Обновление раз в минуту
+
+		// Открытие фейковых окон Windows 98
+		function openFakeWindows() {
+			let win = window.open("", "", "width=300,height=200,left=" + Math.random() * window.innerWidth + ",top=" + Math.random() * window.innerHeight);
+			if (win) {
+				win.document.write(`
+                    <h1 style="font-family: Comic Sans MS; color: red; text-align: center;">Critical Error!</h1>
+                    <p style="font-size: 20px; text-align: center;">Too much acid detected!</p>
+                    <img src="https://media.tenor.com/ZtRB6w2dQeoAAAAd/cat-glitch.gif" style="width: 100%; height: auto;">
+                `);
+				setTimeout(() => win.close(), 4000);
+			}
+		}
+
+		// Открытие окон раз в 10 секунд
+		setInterval(openFakeWindows, 10000);
+		</script>
+	</body>
+</html>
