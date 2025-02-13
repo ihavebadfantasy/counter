@@ -28,7 +28,7 @@ app.get("/counter", (req, res) => {
 	updateDayIfNeeded();
 	res.json({
 		day: dayNumber,
-		catImage: `./cats/cat${dayNumber % 10 + 1}.jpg`, // Выбираем случайное фото из 10 вариантов
+		catImage: `/cats/cat${dayNumber % 10 + 1}.jpg`, // Выбираем случайное фото из 10 вариантов
 		nextUpdate: nextUpdateTime.toISOString()
 	});
 });
