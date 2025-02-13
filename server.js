@@ -4,7 +4,9 @@ const path = require("path");
 
 const app = express();
 app.use(cors());
-app.use("/cats", express.static(path.join(__dirname, "cats"))); // Раздаём файлы из папки
+
+// 📌 Раздаём статические файлы из папки "cats"
+app.use("/cats", express.static(path.join(__dirname, "cats")));
 
 let dayNumber = 34; // Начинаем с 34 и идём вниз
 let nextUpdateTime = getRandomUpdateTime();
@@ -24,14 +26,15 @@ function updateDayIfNeeded() {
 	}
 }
 
+// 📌 Отдаём JSON с номером дня и картинкой
 app.get("/counter", (req, res) => {
 	updateDayIfNeeded();
 	res.json({
 		day: dayNumber,
-		catImage: `/cats/cat${dayNumber % 10 + 1}.jpg`, // Выбираем случайное фото из 10 вариантов
-		nextUpdate: nextUpdateTime.toISOString()
+		catImage: `/cats/cat${(dayNumber % 10) + 1}.jpg`
 	});
 });
 
 app.listen(3000, () => {
+	console.log("Сервер запущен на http://localhost:3000");
 });
